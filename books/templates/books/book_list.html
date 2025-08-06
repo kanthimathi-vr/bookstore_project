@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Book List</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Search by title" value="{{ request.GET.q }}">
+    <select name="order_by">
+        <option value="title">Title</option>
+        <option value="price">Price</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    {% for book in books %}
+        <li>
+            <a href="{% url 'book-detail' book.pk %}">{{ book.title }}</a> by {{ book.author }}
+        </li>
+    {% empty %}
+        <li>No books found.</li>
+    {% endfor %}
+</ul>
+
+{% if is_paginated %}
+    <div>
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&laquo; Prev</a>
+        {% endif %}
+
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if user.is_staff %}
+    <p><a href="{% url 'book-add' %}">+ Add New Book</a></p>
+{% endif %}
+{% endblock %}

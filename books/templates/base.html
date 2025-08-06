@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Bookstore</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        header { margin-bottom: 20px; }
+        footer { margin-top: 40px; font-size: 0.9em; color: #888; }
+        nav a { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 Online Bookstore</h1>
+        <nav>
+            <a href="{% url 'book-list' %}">Home</a>
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.username }}</span>
+                <a href="{% url 'admin:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'admin:login' %}">Login</a>
+            {% endif %}
+        </nav>
+        <hr>
+    </header>
+
+    {% block content %}
+    <!-- page-specific content -->
+    {% endblock %}
+
+    <footer>
+        <hr>
+        <p>&copy; 2025 Bookstore Inc.</p>
+    </footer>
+</body>
+</html>

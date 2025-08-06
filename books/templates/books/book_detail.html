@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ book.title }}</h1>
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>Description:</strong> {{ book.description }}</p>
+<p><strong>Price:</strong> ${{ book.price }}</p>
+<p><strong>Discount:</strong> {{ book.discount_percent }}%</p>
+<p><strong>Discounted Price:</strong> ${{ discounted_price }}</p>
+
+{% if user.is_staff %}
+    <p>
+        <a href="{% url 'book-edit' book.pk %}">Edit</a> |
+        <a href="{% url 'book-delete' book.pk %}">Delete</a>
+    </p>
+{% endif %}
+
+<p><a href="{% url 'book-list' %}">← Back to list</a></p>
+{% endblock %}
